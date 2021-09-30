@@ -1,9 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { StyledShowCard } from './ShowCard.styled';
+import { Star } from '../styled';
 
 // Preview card for shows
-const ShowCard = ({ id, image, name, summary }) => {
+const ShowCard = ({ id, image, name, summary, onStarClick, isStarred }) => {
   // Slicing the summary into 10 words - regular expression is to change the markups to empty space
   const summaryAsText = summary
     ? `${summary.split(' ').slice(0, 10).join(' ').replace(/<.+?>/g, '')}...`
@@ -21,7 +22,9 @@ const ShowCard = ({ id, image, name, summary }) => {
 
       <div className="btns">
         <Link to={`/show/${id}`}>Read more</Link>
-        <button type="button">Star me</button>
+        <button type="button" onClick={onStarClick}>
+          <Star active={isStarred} />
+        </button>
       </div>
     </StyledShowCard>
   );
