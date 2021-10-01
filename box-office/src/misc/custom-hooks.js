@@ -1,5 +1,6 @@
 import { useReducer, useEffect } from 'react';
 
+// REducer function with actions specified
 function showsReducer(prevState, action) {
   switch (action.type) {
     case 'ADD': {
@@ -15,6 +16,7 @@ function showsReducer(prevState, action) {
   }
 }
 
+// Custom wrapper hook - To read and write to the browser local storage
 function usePersistedReducer(reducer, initialState, key) {
   const [state, dispatch] = useReducer(reducer, initialState, initial => {
     const persisted = localStorage.getItem(key);
