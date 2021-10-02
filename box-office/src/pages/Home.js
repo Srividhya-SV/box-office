@@ -39,7 +39,7 @@ const Home = () => {
     if (ev.keyCode === 13) {
       onSearch();
     }
-    console.log(ev.keyCode);
+    // console.log(ev.keyCode);
   };
 
   const renderResults = () => {

@@ -1,6 +1,8 @@
 import styled from 'styled-components';
+import FadeIn from 'react-fade-in';
 
-export const FlexGrid = styled.div`
+// Fadein animation is added on top of the Flexgrid
+export const FlexGrid = styled(FadeIn)`
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
