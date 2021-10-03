@@ -1,4 +1,5 @@
-import React from 'react';
+// memo prevents unneccesary rerendering of components
+import React, { memo } from 'react';
 import { TitleWrapper } from './Title.styled';
 
 const Title = ({ title, subtitle }) => {
@@ -10,4 +11,4 @@ const Title = ({ title, subtitle }) => {
   );
 };
 
-export default Title;
+export default memo(Title);

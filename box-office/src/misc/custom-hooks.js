@@ -1,4 +1,4 @@
-import { useReducer, useEffect, useState } from 'react';
+import { useReducer, useEffect, useState, useRef, useCallback } from 'react';
 import { apiGet } from './config';
 
 // REducer function with actions specified
@@ -45,10 +45,14 @@ export function useLastQuery(key = 'lastQuery') {
     return persisted ? JSON.parse(persisted) : '';
   });
 
-  const setPersistedInput = newState => {
-    setInput(newState);
-    sessionStorage.setItem(key, JSON.stringify(newState));
-  };
+  // usecallback is used here to avoid multiple copies of this function when the state is changed.
+  const setPersistedInput = useCallback(
+    newState => {
+      setInput(newState);
+      sessionStorage.setItem(key, JSON.stringify(newState));
+    },
+    [key]
+  );
   return [input, setPersistedInput];
 }
 

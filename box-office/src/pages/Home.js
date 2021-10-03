@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import ActorGrid from '../components/actor/ActorGrid';
 import CustomRadio from '../components/CustomRadio';
 import MainPageLayout from '../components/MainPageLayout';
@@ -10,6 +10,23 @@ import {
   RadioInputsWrapper,
   SearchButtonWrapper,
 } from './Home.styled';
+
+const renderResults = results => {
+  // No results for gibbish search value
+  if (results && results.length === 0) {
+    return <div>No Results</div>;
+  }
+
+  // Results from api - Switching between show and actors based on the api result
+  if (results && results.length > 0) {
+    return results[0].show ? (
+      <ShowGrid data={results} />
+    ) : (
+      <ActorGrid data={results} />
+    );
+  }
+  return null;
+};
 
 const Home = () => {
   const [input, setInput] = useLastQuery();
@@ -28,10 +45,13 @@ const Home = () => {
   };
 
   // To associate the search text with the state
-  const onInputChange = ev => {
-    setInput(ev.target.value);
-    // console.log(ev.target.value);
-  };
+  const onInputChange = useCallback(
+    ev => {
+      setInput(ev.target.value);
+      // console.log(ev.target.value);
+    },
+    [setInput]
+  );
 
   // To call the search function when Enter is pressed
   const onKeyDown = ev => {
@@ -42,26 +62,10 @@ const Home = () => {
     // console.log(ev.keyCode);
   };
 
-  const renderResults = () => {
-    // No results for gibbish search value
-    if (results && results.length === 0) {
-      return <div>No Results</div>;
-    }
-
-    // Results from api - Switching between show and actors based on the api result
-    if (results && results.length > 0) {
-      return results[0].show ? (
-        <ShowGrid data={results} />
-      ) : (
-        <ActorGrid data={results} />
-      );
-    }
-    return null;
-  };
-
-  const onRadioChange = ev => {
+  // usecallback is used to render this component only once - for optimization
+  const onRadioChange = useCallback(ev => {
     setSearchOption(ev.target.value);
-  };
+  }, []);
 
   // console.log(searchOption);
 
@@ -102,7 +106,7 @@ const Home = () => {
         </button>
       </SearchButtonWrapper>
 
-      {renderResults()}
+      {renderResults(results)}
     </MainPageLayout>
   );
 };
