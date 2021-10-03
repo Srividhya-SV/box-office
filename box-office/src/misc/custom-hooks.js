@@ -1,4 +1,4 @@
-import { useReducer, useEffect, useState, useRef, useCallback } from 'react';
+import { useReducer, useEffect, useState, useCallback } from 'react';
 import { apiGet } from './config';
 
 // REducer function with actions specified
